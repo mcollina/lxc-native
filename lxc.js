@@ -1,9 +1,12 @@
 var binding = require('bindings')('lxc.node').lxc
+var assert = require('assert')
 
 function Container (name) {
   if (!(this instanceof Container)) {
     return new Container(name)
   }
+
+  assert(name, 'missing name')
 
   this.binding = binding(name)
 }

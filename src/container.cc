@@ -1,5 +1,6 @@
 #include <nan.h>
 #include "container.h"
+#include <lxc/lxccontainer.h>
 
 namespace lxc {
 
@@ -12,6 +13,14 @@ NAN_METHOD(Build) {
 }
 
 Persistent<FunctionTemplate> Container::container_constructor;
+
+Container::Container (NanUtf8String* name) {
+  this->lxc = lxc_container_new((char*) name, NULL);
+};
+
+Container::~Container () {
+  free(this->lxc);
+}
 
 void Container::Init() {
   Local<FunctionTemplate> tpl = NanNew<FunctionTemplate>(Container::New);
@@ -35,13 +44,11 @@ NAN_METHOD(Container::New) {
 Handle<Value> Container::NewInstance (Local<String> &name) {
   NanEscapableScope();
 
-  Local<Object> instance;
-
   Local<FunctionTemplate> constructorHandle =
     NanNew<FunctionTemplate>(container_constructor);
 
   Handle<Value> argv[] = { name };
-  instance = constructorHandle->GetFunction()->NewInstance(1, argv);
+  Local<Object> instance = constructorHandle->GetFunction()->NewInstance(1, argv);
 
   return NanEscapeScope(instance);
 }

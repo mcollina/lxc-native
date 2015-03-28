@@ -11,7 +11,10 @@ class Container : public node::ObjectWrap {
   public:
     static void Init ();
     static Handle<Value> NewInstance (Local<String> &name);
-    Container (NanUtf8String* location);
+
+    Container (NanUtf8String* name);
+    ~Container ();
+
     struct lxc_container *lxc;
   private:
     static Persistent<FunctionTemplate> container_constructor;
