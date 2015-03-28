@@ -5,7 +5,8 @@
       "<!(node -e \"require('nan')\")"
     ],
     "sources": [
-      "src/lxc.cc"
+      "src/lxc.cc",
+      "src/container.cc"
     ]
   }]
 }

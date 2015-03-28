@@ -1,14 +1,15 @@
 #include <nan.h>
+#include <lxc/lxccontainer.h>
+#include "container.h"
 
 using namespace v8;
 
-NAN_METHOD(Print) {
-  printf("I am a native addon and I AM ALIVE!\n");
-  NanReturnUndefined();
-}
+namespace lxc {
 
 void Init(Handle<Object> exports) {
-  exports->Set(NanNew("print"), NanNew<FunctionTemplate>(Print)->GetFunction());
+  exports->Set(NanNew("lxc"), NanNew<FunctionTemplate>(Build)->GetFunction());
 }
 
 NODE_MODULE(lxc, Init)
+
+} //namespace lxc
