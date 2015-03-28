@@ -1,0 +1,21 @@
+{
+  "name": "lxc-native",
+  "version": "0.0.1",
+  "description": "LXC native binding for node",
+  "main": "lxc.js",
+  "gypfile": "true",
+  "repository": "https://github.com/mcollina/lxc-native",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lxc",
+    "containers"
+  ],
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^1.7.0"
+  }
+}
