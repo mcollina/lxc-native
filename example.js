@@ -5,8 +5,11 @@ container.isDefined(function (err, defined) {
   if (err) { return console.log(err.message) }
 
   if (defined) {
+    console.log('the container is defined')
     return start()
   }
+
+  console.log('the container is not defined')
 
   container.create({
     template: 'download',

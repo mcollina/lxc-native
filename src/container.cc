@@ -1,5 +1,10 @@
+/* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
+ * MIT License
+ */
+
 #include <nan.h>
 #include "container.h"
+#include "is_defined_worker.h"
 #include <lxc/lxccontainer.h>
 
 namespace lxc {
@@ -19,7 +24,7 @@ Container::Container (NanUtf8String* name) {
 };
 
 Container::~Container () {
-  free(this->lxc);
+  lxc_container_put(this->lxc);
 }
 
 void Container::Init() {
@@ -27,7 +32,7 @@ void Container::Init() {
   NanAssignPersistent(container_constructor, tpl);
   tpl->SetClassName(NanNew("Container"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
-  //NODE_SET_PROTOTYPE_METHOD(tpl, "open", Container::Open);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "isDefined", Container::IsDefined);
 }
 
 NAN_METHOD(Container::New) {
@@ -53,5 +58,24 @@ Handle<Value> Container::NewInstance (Local<String> &name) {
   return NanEscapeScope(instance);
 }
 
+
+NAN_METHOD(Container::IsDefined) {
+  NanScope();
+
+  Container* container = node::ObjectWrap::Unwrap<Container>(args.This());
+
+  if (args.Length() == 0 || !args[0]->IsFunction())
+    return NanThrowError("isDefined() requires a callback argument");
+
+  Local<Function> callback = args[0].As<Function>();
+
+  IsDefinedWorker* worker = new IsDefinedWorker(container, new NanCallback(callback));
+
+  Local<Object> _this = args.This();
+  worker->SaveToPersistent("container", _this);
+  NanAsyncQueueWorker(worker);
+
+  NanReturnValue(args.This());
+}
 
 } // namespace lxc

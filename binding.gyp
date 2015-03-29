@@ -11,7 +11,8 @@
     },
     "sources": [
       "src/lxc.cc",
-      "src/container.cc"
+      "src/container.cc",
+      "src/is_defined_worker.cc"
     ]
   }]
 }

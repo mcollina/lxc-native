@@ -1,3 +1,10 @@
+
+/* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
+ * MIT License
+ */
+#ifndef LN_CONTAINER_H
+#define LN_CONTAINER_H
+
 #include <nan.h>
 #include <lxc/lxccontainer.h>
 
@@ -19,6 +26,9 @@ class Container : public node::ObjectWrap {
   private:
     static Persistent<FunctionTemplate> container_constructor;
     static NAN_METHOD(New);
+    static NAN_METHOD(IsDefined);
 };
 
 } // namespace lxc
+
+#endif
