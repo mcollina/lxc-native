@@ -1,5 +1,5 @@
 var lxc = require('.')
-var container = lxc('mycontainer')
+var container = lxc('testcontainer')
 
 container.isDefined(function (err, defined) {
   if (err) { return console.log(err.message) }
@@ -17,6 +17,7 @@ container.isDefined(function (err, defined) {
   }, function created (err) {
     if (err) { return console.log(err.message) }
 
+    console.log('container created successfully')
     start()
   })
 })

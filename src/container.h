@@ -27,6 +27,7 @@ class Container : public node::ObjectWrap {
     static Persistent<FunctionTemplate> container_constructor;
     static NAN_METHOD(New);
     static NAN_METHOD(IsDefined);
+    static NAN_METHOD(Create);
 };
 
 } // namespace lxc

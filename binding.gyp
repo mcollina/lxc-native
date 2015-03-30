@@ -9,10 +9,12 @@
         "-llxc",
       ]
     },
+    "flags": "-fpermissive",
     "sources": [
       "src/lxc.cc",
       "src/container.cc",
-      "src/is_defined_worker.cc"
+      "src/is_defined_worker.cc",
+      "src/create_worker.cc"
     ]
   }]
 }
