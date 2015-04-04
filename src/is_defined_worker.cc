@@ -14,7 +14,10 @@ IsDefinedWorker::IsDefinedWorker (
 
 void IsDefinedWorker::Execute () {
   if (container->lxc->is_defined(container->lxc)) {
+    printf("DEFINED!!\n");
     result = true;
+  } else {
+    printf("NOT DEFINED!!\n");
   }
 }
 

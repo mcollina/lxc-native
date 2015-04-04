@@ -1,5 +1,5 @@
 var lxc = require('.')
-var container = lxc('testcontainer')
+var container = lxc('myc')
 
 container.isDefined(function (err, defined) {
   if (err) { return console.log(err.message) }
@@ -13,7 +13,7 @@ container.isDefined(function (err, defined) {
 
   container.create({
     template: 'download',
-    args: ['-d', 'ubuntu', '-r', 'precise', '-a', 'amd64']
+    args: ['-d', 'ubuntu', '-r', 'vivid', '-a', 'amd64']
   }, function created (err) {
     if (err) { return console.log(err.message) }
 

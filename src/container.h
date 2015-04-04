@@ -17,9 +17,9 @@ NAN_METHOD(Build);
 class Container : public node::ObjectWrap {
   public:
     static void Init ();
-    static Handle<Value> NewInstance (Local<String> &name);
+    static Handle<Value> NewInstance (Local<Value> &name);
 
-    Container (NanUtf8String* name);
+    Container (char* name);
     ~Container ();
 
     struct lxc_container *lxc;
@@ -28,6 +28,7 @@ class Container : public node::ObjectWrap {
     static NAN_METHOD(New);
     static NAN_METHOD(IsDefined);
     static NAN_METHOD(Create);
+    char* name;
 };
 
 } // namespace lxc

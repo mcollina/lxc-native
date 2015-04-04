@@ -26,6 +26,7 @@ CreateWorker::CreateWorker (
   for (int i = 0; i < length; i++) {
     Local<String> v8str = args->Get(i).As<String>();
     this->args[i] = strdup((char*) *NanUtf8String(v8str));
+    printf("arg %s\n", this->args[i]);
   }
 };
 
@@ -42,7 +43,8 @@ CreateWorker::~CreateWorker () {
 
 void CreateWorker::Execute () {
   lxc_container* lxc = this->container->lxc;
-  if (!lxc->create(lxc, this->templ, NULL, NULL, LXC_CREATE_QUIET,
+  //if (!lxc->create(lxc, this->templ, NULL, NULL, LXC_CREATE_QUIET,
+  if (!lxc->create(lxc, this->templ, NULL, NULL, 0,
         this->args)) {
     this->SetErrorMessage("unable to create the container");
   }

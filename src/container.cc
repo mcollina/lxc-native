@@ -13,22 +13,25 @@ namespace lxc {
 NAN_METHOD(Build) {
   NanScope();
 
-  if (args.Length() == 0 || !args[0]->IsString())
+  if (args.Length() == 0 || !args[0]->IsString() || args[0].As<String>()->Length() == 0)
     return NanThrowError("initializing a container requires a name");
 
-  Local<String> name = args[0].As<String>();
+  Local<Value> name = args[0];
 
   NanReturnValue(Container::NewInstance(name));
 }
 
 Persistent<FunctionTemplate> Container::container_constructor;
 
-Container::Container (NanUtf8String* name) {
-  this->lxc = lxc_container_new((char*) name, NULL);
+Container::Container (char* name) {
+  printf("creating lxc_container %s\n", name);
+  this->name = name;
+  this->lxc = lxc_container_new(name, NULL);
 };
 
 Container::~Container () {
   lxc_container_put(this->lxc);
+  delete name;
 }
 
 void Container::Init() {
@@ -43,7 +46,7 @@ void Container::Init() {
 NAN_METHOD(Container::New) {
   NanScope();
 
-  NanUtf8String* name = new NanUtf8String(args[0]);
+  char* name = strdup((char*) *NanUtf8String(args[0]));
 
   Container* obj = new Container(name);
   obj->Wrap(args.This());
@@ -51,7 +54,7 @@ NAN_METHOD(Container::New) {
   NanReturnValue(args.This());
 }
 
-Handle<Value> Container::NewInstance (Local<String> &name) {
+Handle<Value> Container::NewInstance (Local<Value> &name) {
   NanEscapableScope();
 
   Local<FunctionTemplate> constructorHandle =
