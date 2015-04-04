@@ -1,7 +1,7 @@
-
 /* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
  * MIT License
  */
+
 #ifndef LN_CONTAINER_H
 #define LN_CONTAINER_H
 

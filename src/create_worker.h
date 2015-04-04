@@ -1,6 +1,9 @@
+/* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
+ * MIT License
+ */
+
 #include <nan.h>
 #include "container.h"
-#include <lxc/lxccontainer.h>
 
 namespace lxc {
 

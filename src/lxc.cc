@@ -1,5 +1,8 @@
+/* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
+ * MIT License
+ */
+
 #include <nan.h>
-#include <lxc/lxccontainer.h>
 #include "container.h"
 
 using namespace v8;

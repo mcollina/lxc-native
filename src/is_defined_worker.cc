@@ -1,7 +1,11 @@
+/* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
+ * MIT License
+ */
+
 #include <nan.h>
+#include <lxc/lxccontainer.h>
 #include "container.h"
 #include "is_defined_worker.h"
-#include <lxc/lxccontainer.h>
 
 namespace lxc {
 
@@ -13,12 +17,11 @@ IsDefinedWorker::IsDefinedWorker (
 };
 
 void IsDefinedWorker::Execute () {
+  lxc_container_get(container->lxc);
   if (container->lxc->is_defined(container->lxc)) {
-    printf("DEFINED!!\n");
     result = true;
-  } else {
-    printf("NOT DEFINED!!\n");
   }
+  lxc_container_put(container->lxc);
 }
 
 void IsDefinedWorker::HandleOKCallback () {

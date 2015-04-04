@@ -1,8 +1,12 @@
+/* Copyright (c) 2015 Matteo Collina <hello@matteocollina.com>
+ * MIT License
+ */
+
 #include <nan.h>
-#include "container.h"
-#include "create_worker.h"
 #include <lxc/lxccontainer.h>
 #include <string.h>
+#include "container.h"
+#include "create_worker.h"
 
 namespace lxc {
 
@@ -26,7 +30,6 @@ CreateWorker::CreateWorker (
   for (int i = 0; i < length; i++) {
     Local<String> v8str = args->Get(i).As<String>();
     this->args[i] = strdup((char*) *NanUtf8String(v8str));
-    printf("arg %s\n", this->args[i]);
   }
 };
 
@@ -42,12 +45,14 @@ CreateWorker::~CreateWorker () {
 }
 
 void CreateWorker::Execute () {
-  lxc_container* lxc = this->container->lxc;
-  //if (!lxc->create(lxc, this->templ, NULL, NULL, LXC_CREATE_QUIET,
-  if (!lxc->create(lxc, this->templ, NULL, NULL, 0,
+  struct lxc_container* c = this->container->lxc;
+  lxc_container_get(c);
+  if (!c->create(c, this->templ, NULL, NULL, LXC_CREATE_QUIET,
         this->args)) {
+
     this->SetErrorMessage("unable to create the container");
   }
+  lxc_container_put(c);
 }
 
 } // namespace lxc

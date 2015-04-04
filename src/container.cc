@@ -3,10 +3,10 @@
  */
 
 #include <nan.h>
+#include <lxc/lxccontainer.h>
 #include "container.h"
 #include "is_defined_worker.h"
 #include "create_worker.h"
-#include <lxc/lxccontainer.h>
 
 namespace lxc {
 
@@ -24,8 +24,11 @@ NAN_METHOD(Build) {
 Persistent<FunctionTemplate> Container::container_constructor;
 
 Container::Container (char* name) {
-  printf("creating lxc_container %s\n", name);
+  printf("name %s\n", name);
   this->name = name;
+  // the second argument is the path to the folder
+  // where to store the containers
+  // TODO make it an argument
   this->lxc = lxc_container_new(name, NULL);
 };
 
